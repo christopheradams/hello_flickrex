@@ -1,35 +1,26 @@
 <section class="phx-hero">
-  <h1><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h1>
-  <p>A productive web framework that<br/>does not compromise speed or maintainability.</p>
+  <h2>Überauth Flickr + Phoenix Example</h2>
+  <p class="lead">
+  This is an application to show an example of how to wire up
+  <a href="https://github.com/christopheradams/ueberauth_flickr">Überauth Flickr</a> with
+  <a href="https://github.com/phoenixframework/phoenix">Phoenix</a>.
+  </p>
 </section>
 
 <section class="row">
   <article class="column">
-    <h2>Resources</h2>
-    <ul>
-      <li>
-        <a href="https://hexdocs.pm/phoenix/overview.html">Guides &amp; Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix/blob/v1.4/CHANGELOG.md">v1.4 Changelog</a>
-      </li>
-    </ul>
-  </article>
-  <article class="column">
-    <h2>Help</h2>
-    <ul>
-      <li>
-        <a href="https://elixirforum.com/c/phoenix-forum">Forum</a>
-      </li>
-      <li>
-        <a href="https://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on Freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">Twitter @elixirphoenix</a>
-      </li>
-    </ul>
+  <%= if @current_user do %>
+    <h2>Welcome, <%= @current_user.name %>!</h2>
+    <img src="<%= @current_user.avatar %>" class="img-circle"/>
+    <%= form_for @conn, Routes.auth_path(@conn, :delete), [method: :delete], fn _f -> %>
+      <%= submit "Logout" %>
+    <% end %>
+    <br>
+  <% else %>
+    <a href="/auth/flickr">
+      <i class="fa fa-user"></i>
+      Sign in with Flickr
+    </a>
+  <% end %>
   </article>
 </section>

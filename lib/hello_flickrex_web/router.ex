@@ -19,6 +19,14 @@ defmodule HelloFlickrexWeb.Router do
     get "/", PageController, :index
   end
 
+  scope "/auth", HelloFlickrexWeb do
+    pipe_through :browser
+
+    get "/:provider", AuthController, :request
+    get "/:provider/callback", AuthController, :callback
+    delete "/logout", AuthController, :delete
+  end
+
   # Other scopes may use custom stacks.
   # scope "/api", HelloFlickrexWeb do
   #   pipe_through :api

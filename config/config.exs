@@ -22,6 +22,17 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
+# Configures Überauth
+config :ueberauth, Ueberauth,
+  providers: [
+    flickr: {Ueberauth.Strategy.Flickr, []}
+  ]
+
+config :ueberauth, Ueberauth.Strategy.Flickr.OAuth,
+  consumer_key: System.get_env("FLICKR_CONSUMER_KEY"),
+  consumer_secret: System.get_env("FLICKR_CONSUMER_SECRET"),
+  redirect_uri: System.get_env("FLICKR_REDIRECT_URI")
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
